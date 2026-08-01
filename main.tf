@@ -70,3 +70,48 @@ resource "aws_route_table" "database" {
 
   tags = local.all_database_route_table_tags
 }
+
+# Routes for public subnets
+resource "aws_route" "public" {
+  route_table_id            = aws_route_table.public.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.gw.id
+}
+
+# elastic IP
+resource "aws_eip" "eip" {
+  domain   = "vpc"
+  tags = merge(local.common_tags, {
+    Name = "${var.project}-${var.environment}-eip"
+  })
+}
+
+
+# NAT Gateway
+resource "aws_nat_gateway" "nat_gateway" {
+  allocation_id = aws_eip.eip.id
+  subnet_id     = aws_subnet.public[0].id   # we are creating NAT gateway in the first public subnet (us-east-1a)
+
+  tags = merge(local.common_tags, {
+    Name = "${var.project}-${var.environment}-nat-gateway"
+  })
+
+  # To ensure proper ordering, it is recommended to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_eip.eip, aws_internet_gateway.gw]
+}
+
+# Routes for private subnets
+resource "aws_route" "private" {
+  route_table_id            = aws_route_table.private.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_nat_gateway.nat_gateway.id
+}
+
+# Routes for database subnets
+resource "aws_route" "database" {
+  route_table_id            = aws_route_table.database.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_nat_gateway.nat_gateway.id
+}
+

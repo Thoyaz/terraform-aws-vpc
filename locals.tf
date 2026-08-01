@@ -32,4 +32,14 @@ locals {
     all_database_route_table_tags = merge(local.common_tags, var.database_route_table_tags, {
         Name = "${var.project}-${var.environment}-database-rt"
     })
+
+    # Elastic IP for NAT tags
+    all_nat_eip_tags = merge(local.common_tags, var.nat_eip_tags, {
+        Name = "${var.project}-${var.environment}-nat-eip"
+    })
+
+    # NAT Gateway tags
+    all_nat_gateway_tags = merge(local.common_tags, var.nat_gateway_tags, {
+        Name = "${var.project}-${var.environment}-nat-gateway"
+    })
 }
