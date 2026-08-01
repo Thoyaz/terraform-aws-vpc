@@ -15,4 +15,10 @@ locals {
             Name = "${var.project}-${var.environment}-igw"
         }
     )
+
+    availability_zones = slice(data.aws_availability_zones.available.names, 0, 2)
+
+    all_public_subnet_tags = merge(local.common_tags, {
+        Name = "${var.project}-${var.environment}-public-subnet-${local.availability_zones}"
+    })
 }
