@@ -115,3 +115,24 @@ resource "aws_route" "database" {
   gateway_id = aws_nat_gateway.nat_gateway.id
 }
 
+
+# Route table associations for public subnets
+resource "aws_route_table_association" "public" {
+  count = length(var.public_subnet_cidr)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public.id
+}
+
+# Route table associations for private subnets
+resource "aws_route_table_association" "private" {
+  count = length(var.private_subnet_cidr)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
+
+# Route table associations for database subnets
+resource "aws_route_table_association" "database" {
+  count = length(var.database_subnet_cidr)
+  subnet_id      = aws_subnet.database[count.index].id
+  route_table_id = aws_route_table.database.id
+}
