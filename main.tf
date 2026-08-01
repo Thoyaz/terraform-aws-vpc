@@ -21,5 +21,7 @@ resource "aws_subnet" "main" {
   availability_zone = local.availability_zones[count.index]
 
 
-  tags = local.all_public_subnet_tags
+  tags = merge(local.all_public_subnet_tags,{
+    Name = "${local.project}-${local.environment}-public-subnet-${local.availability_zones[count.index]}"
+  } )
 }
