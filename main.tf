@@ -17,7 +17,7 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_subnet" "main" {
   count = length(var.public_subnet_cidr)
   vpc_id     = aws_vpc.main.id
-  cidr_block = var.public_subnet_cidr
+  cidr_block = var.public_subnet_cidr[count.index]
   availability_zone = local.availability_zones
 
 
