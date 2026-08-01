@@ -18,5 +18,7 @@ locals {
 
     availability_zones = slice(data.aws_availability_zones.available.names, 0, 2)
 
-    all_public_subnet_tags = local.common_tags
+    all_public_subnet_tags = merge(local.common_tags, var.public_subnet_tags)
+    all_private_subnet_tags = merge(local.common_tags, var.private_subnet_tags)
+    all_database_subnet_tags = merge(local.common_tags, var.database_subnet_tags)
 }

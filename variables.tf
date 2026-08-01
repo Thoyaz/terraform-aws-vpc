@@ -30,3 +30,28 @@ variable "public_subnet_cidr" {
     type = list(string)
     default = []
 }
+
+variable "public_subnet_tags" {
+    type = map(string)
+    default = {}
+}
+
+variable "private_subnet_cidr" {
+    type = list(string)
+    default = []
+}
+
+variable "private_subnet_tags" {
+    type = map(string)
+    default = {}
+}
+
+variable "database_subnet_cidr" {
+    type = list(string)
+    default = []
+}
+
+variable "database_subnet_tags" {
+    type = map(string)
+    default = {}
+}
