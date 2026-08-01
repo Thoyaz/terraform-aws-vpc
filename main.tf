@@ -27,7 +27,7 @@ resource "aws_subnet" "main" {
 }
 
 # Create private subnets
-resource "aws_subnet" "main" {
+resource "aws_subnet" "private" {
   count = length(var.private_subnet_cidr)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.private_subnet_cidr[count.index]
@@ -39,7 +39,7 @@ resource "aws_subnet" "main" {
 }
 
 # Create database subnets
-resource "aws_subnet" "main" {
+resource "aws_subnet" "database" {
   count = length(var.database_subnet_cidr)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.database_subnet_cidr[count.index]
