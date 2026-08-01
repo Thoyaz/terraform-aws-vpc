@@ -28,5 +28,5 @@ variable "igw_tags" {
 
 variable "public_subnet_cidr" {
     type = list(string)
-    default = {}
+    default = {[]}
 }
