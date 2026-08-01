@@ -82,3 +82,23 @@ variable "nat_gateway_tags" {
     type = map(string)
     default = {}
 }
+
+variable "is_peering_required" {
+    type = bool
+    default = false
+}
+
+variable "target_vpc_id" {
+    type = string
+    default = ""
+}
+
+variable "requester_vpc_id" {
+    type = string
+    default = ""
+}
+
+variable "vpc_peering_connection_tags" {
+    type = map(string)
+    default = {}
+}

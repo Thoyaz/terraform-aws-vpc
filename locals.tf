@@ -42,4 +42,9 @@ locals {
     all_nat_gateway_tags = merge(local.common_tags, var.nat_gateway_tags, {
         Name = "${var.project}-${var.environment}-nat-gateway"
     })
+
+    # VPC Peering Connection tags
+    all_vpc_peering_connection_tags = merge(local.common_tags, var.vpc_peering_connection_tags, {
+        Name = "${var.project}-${var.environment}-vpc-peering-connection"
+    })
 }
