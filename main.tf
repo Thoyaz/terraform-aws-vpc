@@ -49,3 +49,24 @@ resource "aws_subnet" "database" {
     Name = "${var.project}-${var.environment}-database-subnet-${local.availability_zones[count.index]}"
   } )
 }
+
+# Route table for public subnets
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+  tags = local.all_public_route_table_tags
+}
+
+# Route table for private subnets
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+
+  tags = local.all_private_route_table_tags
+}
+
+# Route table for database subnets
+resource "aws_route_table" "database" {
+  vpc_id = aws_vpc.main.id
+
+  tags = local.all_database_route_table_tags
+}
